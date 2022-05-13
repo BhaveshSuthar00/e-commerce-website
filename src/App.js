@@ -1,10 +1,11 @@
 import React from 'react';
+import AllRoutes from './AllRoutes/AllRoutes';
 // https://e-commerce-port.herokuapp.com/
 function App() {
   return (
-    <div>
-      herl
-    </div>
+    <>
+      <AllRoutes /> 
+    </>
   );
 }
 
