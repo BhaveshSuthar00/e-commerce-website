@@ -1,5 +1,4 @@
 import axios from "axios";
-axios.defaults.withCredentials = true;
 const LOGIN = "LOGIN"; 
 
 const LOGOUT = "LOGOUT";
@@ -13,14 +12,12 @@ const apiCallLoggedIn = (data) =>{
         try {
             console.log(data);
             const startUrl = 'https://e-commerce-port.herokuapp.com'
-            // const startUrl = 'http://localhost:2200'
             const userData = await axios.post(`${startUrl}/user/login`, {...data, method : "GET"});
             console.log(userData);
-            const ud = await axios.post(`${startUrl}/user`, {
-                // withCredentials : true, 
-                method : "GET"
-            })
-            console.log(ud);
+            // const ud = await axios.post(`${startUrl}/user`, {
+            //     method : "GET",
+            //     cookie : `token=${userData.data.token}`
+            // })
         }
         catch (err) {
 
@@ -29,6 +26,6 @@ const apiCallLoggedIn = (data) =>{
 }
 
 export {
-    LOGIN, LOGOUT,
+    LOGIN, LOGOUT,userLoggedIn,userLoggedOut,
     apiCallLoggedIn
 }

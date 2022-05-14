@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import AdminDashBoard from '../components/Admin/AdminDashBoard'
 import Cart from '../components/Cart/Cart'
 import Home from '../components/Home/Home'
 import SplitScreen from '../components/Login/Login'
@@ -16,6 +17,7 @@ const AllRoutes = () => {
             <Route path="/product" element={<Product />} />
             <Route path='/product/:id' element={<SingleProduct />} />
             <Route path='/cart' element={<Cart />} />
+            <Route path='/admin' element={<AdminDashBoard />} />
         </Routes>
     )
 }

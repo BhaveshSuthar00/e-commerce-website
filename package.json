@@ -14,8 +14,11 @@
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-social-login": "^3.4.15",
+    "react-use-googlelogin": "^0.12.5",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
+    "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

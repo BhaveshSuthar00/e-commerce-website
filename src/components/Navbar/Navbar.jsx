@@ -12,16 +12,16 @@ import {
     PopoverTrigger,
     PopoverContent,
     useColorModeValue,
-    useBreakpointValue,
     useDisclosure,
-    MenuDivider,
-    MenuItem,
-    MenuList,
-    Center,
-    Avatar,
-    Menu,
-    MenuButton,
     Image,
+    // useBreakpointValue,
+    // MenuDivider,
+    // MenuItem,
+    // MenuList,
+    // Center,
+    // Avatar,
+    // Menu,
+    // MenuButton,
 } from "@chakra-ui/react";
 import {
     HamburgerIcon,
@@ -30,9 +30,11 @@ import {
     ChevronRightIcon,
 } from "@chakra-ui/icons";
 import {Link} from 'react-router-dom'
-import axios from "axios";
+import {useDispatch} from 'react-redux'
+import { userLoggedOut } from "../../Redux/Login/Action";
 const Navbar = () => {
     const { isOpen, onToggle } = useDisclosure();
+    const dispatch = useDispatch();
     return (
         <Box>
             <Flex
@@ -81,12 +83,22 @@ const Navbar = () => {
                 spacing={6}
                 align={"center"}
             >
+                <Link to='/admin'>
+                    <Button
+                    // display={{ base: "none", md: "inline-flex" }}
+                    fontSize={"sm"}
+                    fontWeight={600}
+                    color={"white"}
+                    bg={"pink.400"}
+                    _hover={{
+                        bg: "pink.300",
+                    }}
+                    >
+                    Admin page
+                    </Button>
+                </Link>
                 <Button onClick={()=>{
-                    const startUrl = 'https://e-commerce-port.herokuapp.com';
-                    // const startUrl = 'http://localhost:2200'
-                    axios.get(`${startUrl}/clearcookie`, {withCredentials: true}).then((res)=> {
-                        console.log(res)
-                    }).catch((err)=>{ console.log(err)})
+                    dispatch(userLoggedOut())
                 }}>
                     LogOut
                 </Button>
@@ -113,6 +125,7 @@ const Navbar = () => {
                     Sign Up
                     </Button>
                 </Link>
+                
             </Stack>
             </Flex>
 
@@ -367,5 +380,4 @@ for(let i = 0; i<NAV_ITEMSList.length; i++) {
         NAV_ITEMSList[i].href)
         NAV_ITEMS.push(nk);
 }
-console.log(NAV_ITEMS)
 export default Navbar;
