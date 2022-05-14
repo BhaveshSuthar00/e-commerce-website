@@ -51,15 +51,14 @@ const Ma = ({productName,image, price, description}) => {
     //     p={5}
     //     w="full"
     // >
-    <Box
-            // maxW="xs"
-            maxW={"300px"}
+        <Box
+        // maxW={"300px"}
+            maxW="xs"
             mx="auto"
-            m={2}
+            m={5}
             bg={useColorModeValue("white", "gray.800")}
             shadow="lg"
             rounded="lg"
-
         >
         <Box px={4} py={2}>
             <chakra.h1

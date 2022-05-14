@@ -3,7 +3,6 @@ import {
     VStack,
     FormControl,
     FormLabel,
-    FormErrorMessage,
     FormHelperText,
     Input,
     Button,
@@ -11,13 +10,23 @@ import {
     Box,
     Text,
     Stack,
+    Flex,
+    Spacer,
 } from '@chakra-ui/react'
 import axios from 'axios';
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useLayoutEffect} from 'react'
 import { v4 as uuid } from 'uuid';
 import Ma from './Card';
 const AdminDashBoard = () => {
     const [products, setProducts] = useState([]);
+    const [idCount , setIdCount] = useState(0)
+    useEffect(() =>{
+        axios.get('https://e-commerce-port.herokuapp.com/product/getAll').then((res)=>{
+            setProducts(res.data);
+            setIdCount(res.data.length);
+        })
+        .catch((err)=>{console.log(err)})
+    },[])
     const [imgUrl, setImgUrl] = useState([]);
     const [colorList, setColorList] = useState([]);
     const handleSubmit = (event)=>{
@@ -30,8 +39,8 @@ const AdminDashBoard = () => {
         for(let i = 0; i<colorList.length; i++) {
             colorArr.push(colorList[i].color);
         }
-        
-        let ProductData = {
+        const ProductData = {
+            id : idCount,
             productName : document.getElementById('productName').value,
             price: +document.getElementById('price').value,
             discount: +document.getElementById('discount').value,
@@ -44,25 +53,43 @@ const AdminDashBoard = () => {
             brand : document.getElementById('brand').value,
             color : colorArr
         };
-        axios.post('https://e-commerce-port.herokuapp.com/product/post', ProductData).then((response) => {console.log(response.data);}).catch((error) => {console.log(error);});
-        console.log(ProductData)
-        window.reload()
+        console.log(ProductData);
+        // axios.post('http://localhost:2200/product/post', {...ProductData, method: 'POST'}).then((response)=>{
+        axios.post('https://e-commerce-port.herokuapp.com/product/post', {...ProductData, method: 'POST'}).then((response)=>{
+            colorArr = [];
+            imgArr = [];
+            setImgUrl([]);
+            setColorList([]);
+            document.getElementById('productName').value = null;
+            document.getElementById('idFor').value = null;
+            document.getElementById('price').value = null;
+            document.getElementById('discount').value = null;
+            document.getElementById('category').value = null;
+            document.getElementById('subCategory').value = null;
+            document.getElementById('stockQty').value = null;
+            document.getElementById('description').value = null;
+            document.getElementById('fabric').value = null;
+            document.getElementById('brand').value = null;
+            setIdCount(idCount+1)
+            setProducts([...products, response.data.product])
+        }).catch((error) => {console.log(error);});        
     };
-    useEffect(() =>{
-        axios.get('https://e-commerce-port.herokuapp.com/product/getAll').then((res)=>{
-            setProducts(res.data);
-        })
-        .catch((err)=>{console.log(err)})
-    },[])
+    if(!idCount){
+        return <>Loading....</>
+    }
     return (
         <>
-            <Stack direction={['column', 'row']}>
-                <VStack w={{base : "23%",lg : "23%", md : "100%", sm : "100%", xm : "100%"}}  p={3}>
-                    <Box as='form' w={"100%"} onSubmit={(e)=>handleSubmit(e)}>
+            <Flex w='100%' direction={['column', 'row']}>
+                <VStack direction='row' bg='pink' w={{base : "50%",lg : "50%", md : "100%", sm : "100%", xm : "100%"}}  
+                p={3}>
+                    <Box as='form' w={"100%"} bg='pink.100' onSubmit={(e)=>handleSubmit(e)} >
+                        <FormControl>
+                            <FormLabel htmlFor='idFor'>Id</FormLabel>
+                            <Input id='idFor' defaultValue={idCount} type='number' />
+                        </FormControl>
                         <FormControl>
                             <FormLabel htmlFor='productName'>Product Name</FormLabel>
                             <Input id='productName' type='text' />
-                            <FormHelperText>Enter the Product Name.</FormHelperText>
                         </FormControl>
                         <FormControl>
                             <FormLabel htmlFor='price'>Enter Price</FormLabel>
@@ -94,14 +121,14 @@ const AdminDashBoard = () => {
                             >
                                 Add
                             </Button>
-                            <VStack >
+                            <VStack maxW='100%'>
                                 {
                                     imgUrl && imgUrl.map((item, index) =>(
-                                        <HStack key={item.id} w='100%'>
-                                            <Text w='70%' maxH="20px" overflow='hidden'>
+                                        <HStack key={item.id} maxW='100%'>
+                                            <Text maxW='70%' maxH="20px" overflow='hidden'>
                                                     {item.url}
                                                 </Text>
-                                                <Button w='30%' onClick={()=>{
+                                                <Button maxW='20%' onClick={()=>{
                                                     let newArr = imgUrl.filter(itemUrl =>{
                                                         if(itemUrl.url === item.url && item.id === itemUrl.id){
                                                             return false;
@@ -139,10 +166,10 @@ const AdminDashBoard = () => {
                             >
                                 Add
                             </Button>
-                            <VStack >
+                            <VStack maxW='50%'>
                                 {
                                     colorList && colorList.map((item, index) =>(
-                                        <HStack key={item.id} w='100%'>
+                                        <HStack key={item.id} w='full'>
                                             <Text w='70%' maxH="20px" overflow='hidden'>
                                                     {item.color}
                                                 </Text>
@@ -176,14 +203,30 @@ const AdminDashBoard = () => {
                         </Button>
                     </Box>
                 </VStack>
-                <Stack direction={['row', 'column']}>
-                    {
-                        products && products.map((item)=>(
-                            <Ma {...item} key={item._id}/>
-                        ))
-                    }
-                </Stack>
-            </Stack>
+                {/* <Spacer /> */}
+                <VStack  
+                    w={{base : "50%",lg : "50%", md : "100%", sm : "100%", xm : "100%"}}>
+                    <Flex
+                    alignItems="center"
+                    justifyContent="center"  
+                    flexWrap={'wrap'}>
+                        {
+                            products && products.map((item)=>(
+                                <Ma {...item} key={item._id}/>
+                            ))
+                        }
+                    </Flex>
+                </VStack>
+                {/* <Box maxW={{base : "50%",lg : "50%", md : "100%", sm : "100%", xm : "100%"}}   >
+                    <Flex flexWrap='wrap'>
+                        {
+                            products && products.map((item)=>(
+                                <Ma {...item} key={item._id}/>
+                            ))
+                        }
+                    </Flex>
+                </Box> */}
+            </Flex>
         </>
     )
 }
