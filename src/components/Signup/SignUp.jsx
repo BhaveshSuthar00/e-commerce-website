@@ -12,12 +12,12 @@ import {
     Heading,
     Text,
     useColorModeValue,
-    Link,
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
   import {useDispatch, useSelector} from 'react-redux'
   import { apiCallSignIn } from '../../Redux/SignIn/Action';
+  import { Link } from 'react-router-dom';
   export default function SignupCard() {
     const dispatch = useDispatch();
     const data = useSelector((store)=> store);
@@ -30,10 +30,11 @@ import {
         password : document.getElementById('password').value, 
         email : document.getElementById('email').value
       }
-      dispatch(apiCallSignIn(data));
+      dispatch(apiCallSignIn(data)).then(()=> window.location.href = "/").catch((err)=> alert(err));
     }
     console.log(data)
     return (
+      <>
       <Flex
         minH={'100vh'}
         align={'center'}
@@ -103,7 +104,7 @@ import {
                 </Stack>
                 <Stack pt={6}>
                   <Text align={'center'}>
-                    Already a user? <Link color={'blue.400'}>Login</Link>
+                    Already a user? <Box as={Link} to='/login' color={'blue.400'}>Login</Box>
                   </Text>
                 </Stack>
               </Stack>
@@ -111,5 +112,6 @@ import {
           </Box>
         </Stack>
       </Flex>
+      </>
     );
   }

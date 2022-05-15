@@ -12,8 +12,10 @@ import {
 } from '@chakra-ui/react';
 import {apiCallLoggedIn} from '../../Redux/Login/Action'
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 export default function SplitScreen() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
         let data = {
@@ -21,7 +23,7 @@ export default function SplitScreen() {
             password : document.getElementById('passwordInput').value,
         };
         console.log(data, 'ahere')
-        dispatch(apiCallLoggedIn(data));
+        dispatch(apiCallLoggedIn(data)).then(()=> window.location.href= '/').catch((err)=> console.log(err));
     }
     return (
         <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>

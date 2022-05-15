@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Flex,
     Text,
     IconButton,
-    Button,
     Stack,
     Collapse,
     Icon,
@@ -14,6 +13,14 @@ import {
     useColorModeValue,
     useDisclosure,
     Image,
+    Input,
+    Spacer,
+    InputGroup,
+    InputLeftElement,
+    ButtonGroup,
+    VStack,
+    Button,
+    useOutsideClick,
     // useBreakpointValue,
     // MenuDivider,
     // MenuItem,
@@ -23,6 +30,9 @@ import {
     // Menu,
     // MenuButton,
 } from "@chakra-ui/react";
+import Cookies from 'universal-cookie';
+
+import {v4 as uuid} from 'uuid'
 import {
     HamburgerIcon,
     CloseIcon,
@@ -30,19 +40,22 @@ import {
     ChevronRightIcon,
 } from "@chakra-ui/icons";
 import {Link} from 'react-router-dom'
-import {useDispatch} from 'react-redux'
-import { userLoggedOut } from "../../Redux/Login/Action";
+import {useDispatch, useSelector} from 'react-redux'
+import { AiOutlineSearch } from 'react-icons/ai'
+import { MdOutlinePersonOutline } from 'react-icons/md'
+import { ProfileBar } from "./ProfileBar";
 const Navbar = () => {
+    const popoverContentBgColor = useColorModeValue("white", "gray.800");
     const { isOpen, onToggle } = useDisclosure();
-    const dispatch = useDispatch();
     return (
         <Box>
             <Flex
             bg={useColorModeValue("white", "gray.800")}
             color={useColorModeValue("gray.600", "white")}
-            minH={"60px"}
+            minH={"80px"}
+            overflow="hidden"
             py={{ base: 2 }}
-            px={{ base: 4 }}
+            px={{ base: 14 }}
             borderBottom={1}
             borderStyle={"solid"}
             borderColor={useColorModeValue("gray.200", "gray.900")}
@@ -62,73 +75,57 @@ const Navbar = () => {
                 aria-label={"Toggle Navigation"}
                 />
             </Flex>
-            <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-                <Link to='/'>
+            <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }} align={"center"} >
+                <Link to='/' >
                     <Image
-                        boxSize='31px'
-                        src={'./threejs.svg'}
+                        align='center'
+                        boxSize='35px'
+                        src={'./myntra.svg'}
                     />
                 </Link>
                 
-                <Flex display={{ base: "none", md: "flex" }} ml={10}>
+                <Flex display={{ base: "none", md: "flex" }} ml={5} align={"center"}>
                 <DesktopNav />
+
                 </Flex>
-                
-            </Flex>
+                <Spacer />
+                <Box display={{ base: "flex", lg: "flex", md: "none", sm : "none"}} minW='30%' >
+                    <InputGroup variant='filled' >
+                        <InputLeftElement  children={<AiOutlineSearch />}/>
+                        <Input type='text' maxW='100%'  placeholder='Search for Brand '/>
+                    </InputGroup>
+                </Box>
+                <Flex>
+                    <Box>
+                        <Box display='block' px={2}>
+                            <Popover   trigger={"hover"} placement={"bottom-start"}>
+                                <PopoverTrigger>
+                                <Box>
+                                    <MdOutlinePersonOutline  style={{ margin: 'auto' , fontSize : "22px"}}/>
+                                    <Text fontWeight={500}>
+                                        Profile
+                                    </Text>
+                                </Box>
+                                </PopoverTrigger>
+                                <PopoverContent 
+                                    mt={4} 
+                                    justify='center'
+                                    border={0}
+                                    boxShadow={"xl"}
+                                    rounded={"xl"}
+                                    bg={popoverContentBgColor}
+                                    p={4}
+                                >
+                                    <ProfileBar />
+                                </PopoverContent>
 
-            <Stack
-                flex={{ base: 1, md: 0 }}
-                justify={"flex-end"}
-                direction={"row"}
-                spacing={6}
-                align={"center"}
-            >
-                <Link to='/admin'>
-                    <Button
-                    // display={{ base: "none", md: "inline-flex" }}
-                    fontSize={"sm"}
-                    fontWeight={600}
-                    color={"white"}
-                    bg={"pink.400"}
-                    _hover={{
-                        bg: "pink.300",
-                    }}
-                    >
-                    Admin page
-                    </Button>
-                </Link>
-                <Button onClick={()=>{
-                    dispatch(userLoggedOut())
-                }}>
-                    LogOut
-                </Button>
-                <Link to="/login">
-                    <Button
-                    fontSize={"sm"}
-                    fontWeight={400}
-                    variant={"outline"}
-                    >
-                    Sign In
-                    </Button>
-                </Link>
-                <Link to='/signup'>
-                    <Button
-                    display={{ base: "none", md: "inline-flex" }}
-                    fontSize={"sm"}
-                    fontWeight={600}
-                    color={"white"}
-                    bg={"pink.400"}
-                    _hover={{
-                        bg: "pink.300",
-                    }}
-                    >
-                    Sign Up
-                    </Button>
-                </Link>
-                
-            </Stack>
+                            </Popover>
+                        </Box>
+                    </Box>
+                </Flex>
             </Flex>
-
+            {/* stack.txt */}
+            </Flex>
             <Collapse in={isOpen} animateOpacity>
             <MobileNav />
             </Collapse>
@@ -142,16 +139,16 @@ const DesktopNav = () => {
     const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
     return (
-    <Stack direction={"row"} spacing={4}>
+    <Stack direction={"row"} spacing={8}>
         {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
-            <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-                <Link
+            <Popover  trigger={"hover"} placement={"bottom-start"}>
+            <PopoverTrigger >
+                <Box as={Link}
                 to={navItem.href ?? "#"}
                 p={2}
-                fontSize={"sm"}
-                fontWeight={500}
+                fontWeight="bold"
+                fontSize={"lg"}
                 color={linkColor}
                 _hover={{
                     textDecoration: "none",
@@ -159,16 +156,17 @@ const DesktopNav = () => {
                 }}
                 >
                 {navItem.label}
-                </Link>
+                </Box>
             </PopoverTrigger>
 
             {navItem.children && (
                 <PopoverContent
                 border={0}
                 boxShadow={"xl"}
+                rounded={"xl"}
                 bg={popoverContentBgColor}
                 p={4}
-                rounded={"xl"}
+                mt={4}
                 minW={"sm"}
                 >
                 <Stack>
@@ -342,12 +340,12 @@ const NAV_ITEMSList = [
             {
                 label: 'Explore Design Work',
                 subLabel: 'Trending Design to inspire you',
-                href: '#',
+                href: '/product',
             },
             {
                 label: 'New & Noteworthy',
                 subLabel: 'Up-and-coming Designers',
-                href: '#',
+                href: '/product',
             },
         ],
     },
