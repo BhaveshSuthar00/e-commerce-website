@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
     Box,
     Flex,
@@ -17,22 +17,8 @@ import {
     Spacer,
     InputGroup,
     InputLeftElement,
-    ButtonGroup,
-    VStack,
-    Button,
-    useOutsideClick,
-    // useBreakpointValue,
-    // MenuDivider,
-    // MenuItem,
-    // MenuList,
-    // Center,
-    // Avatar,
-    // Menu,
-    // MenuButton,
+    
 } from "@chakra-ui/react";
-import Cookies from 'universal-cookie';
-
-import {v4 as uuid} from 'uuid'
 import {
     HamburgerIcon,
     CloseIcon,
@@ -40,25 +26,34 @@ import {
     ChevronRightIcon,
 } from "@chakra-ui/icons";
 import {Link} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
-import { AiOutlineSearch } from 'react-icons/ai'
+import { AiOutlineSearch, AiOutlineHeart } from 'react-icons/ai'
 import { MdOutlinePersonOutline } from 'react-icons/md'
+import { BsHandbag } from 'react-icons/bs'
 import { ProfileBar } from "./ProfileBar";
 const Navbar = () => {
     const popoverContentBgColor = useColorModeValue("white", "gray.800");
     const { isOpen, onToggle } = useDisclosure();
+    const handleSubmitForm = (event) => {
+        event.preventDefault();
+        let value = document.getElementById('searchfield').value
+        console.log(value);
+        document.getElementById('searchfield').value = null;
+
+        console.log("handleSubmitForm")
+    }
     return (
-        <Box>
+        <Box
+            borderBottom={1}
+            borderStyle={"solid"}
+            borderColor={useColorModeValue("gray.200", "gray.900")}
+        >
             <Flex
             bg={useColorModeValue("white", "gray.800")}
             color={useColorModeValue("gray.600", "white")}
             minH={"80px"}
             overflow="hidden"
-            py={{ base: 2 }}
+            py={{ base: 0 }}
             px={{ base: 14 }}
-            borderBottom={1}
-            borderStyle={"solid"}
-            borderColor={useColorModeValue("gray.200", "gray.900")}
             align={"center"}
             >
             <Flex
@@ -89,42 +84,51 @@ const Navbar = () => {
 
                 </Flex>
                 <Spacer />
-                <Box display={{ base: "flex", lg: "flex", md: "none", sm : "none"}} minW='30%' >
+                <Box as='form' onSubmit={handleSubmitForm} display={{ base: "flex", lg: "flex", md: "none", sm : "none"}} minW='30%' >
                     <InputGroup variant='filled' >
-                        <InputLeftElement  children={<AiOutlineSearch />}/>
-                        <Input type='text' maxW='100%'  placeholder='Search for Brand '/>
+                        <InputLeftElement onClick={handleSubmitForm}  children={<AiOutlineSearch />}/>
+                        <Input type='text'id="searchfield" maxW='100%'  placeholder='Search for Brand '/>
                     </InputGroup>
                 </Box>
                 <Flex>
-                    <Box>
-                        <Box display='block' px={2}>
-                            <Popover   trigger={"hover"} placement={"bottom-start"}>
-                                <PopoverTrigger>
-                                <Box>
-                                    <MdOutlinePersonOutline  style={{ margin: 'auto' , fontSize : "22px"}}/>
-                                    <Text fontWeight={500}>
-                                        Profile
-                                    </Text>
-                                </Box>
-                                </PopoverTrigger>
-                                <PopoverContent 
-                                    mt={4} 
-                                    justify='center'
-                                    border={0}
-                                    boxShadow={"xl"}
-                                    rounded={"xl"}
-                                    bg={popoverContentBgColor}
-                                    p={4}
-                                >
-                                    <ProfileBar />
-                                </PopoverContent>
-
-                            </Popover>
-                        </Box>
+                    <Box ml={8} mr={2} cursor='pointer'>
+                        <Popover   trigger={"hover"} placement={"bottom-start"}>
+                            <PopoverTrigger>
+                            <Box>
+                                <MdOutlinePersonOutline  style={{ margin: 'auto' , fontSize : "20px"}}/>
+                                <Text fontWeight={500}>
+                                    Profile
+                                </Text>
+                            </Box>
+                            </PopoverTrigger>
+                            <PopoverContent 
+                                mt={4} 
+                                justify='center'
+                                border={0}
+                                boxShadow={"xl"}
+                                rounded={"xl"}
+                                bg={popoverContentBgColor}
+                                p={4}
+                            >
+                                <ProfileBar />
+                            </PopoverContent>
+                        </Popover>
                     </Box>
+                    <Box px={3} cursor='pointer'>
+                        <AiOutlineHeart  style={{ margin: 'auto' , fontSize : "20px"}}/>
+                        <Text fontWeight={500}>
+                            Wishlist
+                        </Text>
+                    </Box>
+                    <Box px={3} cursor='pointer'>
+                        <BsHandbag  style={{ margin: 'auto' , fontSize : "20px"}}/>
+                        <Text fontWeight={500}>
+                            Bag
+                        </Text>
+                    </Box>
+                    
                 </Flex>
             </Flex>
-            {/* stack.txt */}
             </Flex>
             <Collapse in={isOpen} animateOpacity>
             <MobileNav />
@@ -287,42 +291,6 @@ const MobileNavItem = ({ label, children, href }) => {
     );
 };
 
-// const menudsdf = () =>{
-//     return (
-//         <Menu>
-//         <MenuButton
-//           as={Button}
-//           rounded={'full'}
-//           variant={'link'}
-//           cursor={'pointer'}
-//           minW={0}>
-//           <Avatar
-//             size={'sm'}
-//             src={'https://avatars.dicebear.com/api/male/username.svg'}
-//           />
-//         </MenuButton>
-//         <MenuList alignItems={'center'}>
-//           <br />
-//           <Center>
-//             <Avatar
-//               size={'2xl'}
-//               src={'https://avatars.dicebear.com/api/male/username.svg'}
-//             />
-//           </Center>
-//           <br />
-//           <Center>
-//             <p>Username</p>
-//           </Center>
-//           <br />
-//           <MenuDivider />
-//           <MenuItem>Your Servers</MenuItem>
-//           <MenuItem>Account Settings</MenuItem>
-//           <MenuItem>Logout</MenuItem>
-//         </MenuList>
-//       </Menu>
-//     )
-// }
-
 class navitem {
     constructor(a, b, c, de) {
         this.label = a;
@@ -338,13 +306,13 @@ const NAV_ITEMSList = [
         label: 'Men',
         children: [
             {
-                label: 'Explore Design Work',
-                subLabel: 'Trending Design to inspire you',
+                label: 'T-shirt',
+                subLabel: 'Trending Design t-shirts',
                 href: '/product',
             },
             {
-                label: 'New & Noteworthy',
-                subLabel: 'Up-and-coming Designers',
+                label: 'Shirt',
+                subLabel: 'Designing shirts',
                 href: '/product',
             },
         ],

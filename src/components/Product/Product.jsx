@@ -14,7 +14,11 @@ const Product = () => {
         <>
         <Flex
             bg={useColorModeValue("#F9FAFB", "gray.600")}   
-            maxW='full' flexWrap='wrap' mt={5} alignItems='center' justifyContent='center'>
+            maxW='full' flexWrap='wrap' 
+            mt={5} 
+            alignItems='center' 
+            // justifyContent='center'
+            >
                 {
                     data && data.map((product) =>(
                         <Ma {...product} key={product._id}/>
