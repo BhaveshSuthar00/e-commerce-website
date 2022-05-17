@@ -21,7 +21,6 @@ const Ma = ({productName,image, price, description, discount}) => {
         ml: `-${currentSlide * 100}%`,
     };
     const handelSiderFun = ()=>{
-        console.log(sliderRef.current)
         if(sliderRef.current) return;
         sliderRef.current = setInterval(() => {
             nextSlide()
@@ -41,12 +40,15 @@ const Ma = ({productName,image, price, description, discount}) => {
     },[])
     return (
         <Box
-            maxW={"20%"}
-            mx="auto"
-            m={8}
+            w={"220px"}
             bg={useColorModeValue("white", "gray.800")}
-            shadow="lg"
-            rounded="lg"
+            shadow='md'
+            animateopacity='true'
+            transition='all .2s ease-in-out'
+            _hover={{
+                shadow:"lg",
+            }}
+            rounded="sm"
         >
         <Flex
             w="full"
@@ -68,7 +70,7 @@ const Ma = ({productName,image, price, description, discount}) => {
                     src={slide.img}
                     alt="carousel image"
                     boxSize="full"
-                    h='380px'
+                    h='270px'
                     w="full"
                     fit="cover"
                     backgroundSize="cover"
