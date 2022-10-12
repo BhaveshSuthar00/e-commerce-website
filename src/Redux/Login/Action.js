@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from 'universal-cookie';
+import { BaseURL } from "../../common/constants";
 const cookies = new Cookies();
 
 const LOGIN = "LOGIN"; 
@@ -13,9 +14,7 @@ const userLoggedOut = () => ({type : LOGOUT});
 const apiCallLoggedIn = (data) =>{
     return async (dispatch) => {
         try {
-            console.log(data);
-            const startUrl = 'https://e-commerce-port.herokuapp.com'
-            const userData = await axios.post(`${startUrl}/user/login`, {...data, method : "GET"});
+            const userData = await axios.post(`${BaseURL}/user/login`, {...data, method : "GET"});
             console.log(userData);
             cookies.set('token', userData.data.token, { path: '/' });
             console.log(cookies.get('token'));
@@ -25,7 +24,7 @@ const apiCallLoggedIn = (data) =>{
             // })
         }
         catch (err) {
-
+            return err.response.data.message;
         }
     }
 }

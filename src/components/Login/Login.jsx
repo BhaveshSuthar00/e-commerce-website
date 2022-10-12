@@ -23,7 +23,8 @@ export default function SplitScreen() {
             password : document.getElementById('passwordInput').value,
         };
         console.log(data, 'ahere')
-        dispatch(apiCallLoggedIn(data)).then(()=> window.location.href= '/').catch((err)=> console.log(err));
+        dispatch(apiCallLoggedIn(data)).then(()=> {}).catch((err)=> console.log(err));
+        // window.location.href= '/'
     }
     return (
         <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>

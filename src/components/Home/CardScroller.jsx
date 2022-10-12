@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Text,
   Box,
   Flex,
-  useColorModeValue,
   Image,
   HStack,
 } from "@chakra-ui/react";
