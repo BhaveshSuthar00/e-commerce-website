@@ -1,12 +1,13 @@
-import { legacy_createStore, combineReducers, applyMiddleware } from 'redux';
-import { loginReducer } from './Login/Reducer';
-import reduxThunk from 'redux-thunk';
-import { dataReducer } from './Data/Reducer';
-const rootReducer = combineReducers({
-  login: loginReducer,
-  Data : dataReducer
+import { configureStore } from "@reduxjs/toolkit";
+import Data from "./Data/Data";
+import Login from "./Login/Login";
+
+export const store = configureStore({
+  reducer : {
+    login : Login,
+    Data : Data,
+  },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck : false
+    }),
 })
-export const store = legacy_createStore(
-  rootReducer,
-  applyMiddleware(reduxThunk)
-);

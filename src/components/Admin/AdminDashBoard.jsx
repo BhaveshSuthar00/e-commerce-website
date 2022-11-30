@@ -14,14 +14,15 @@ import {
     Spacer,
 } from '@chakra-ui/react'
 import axios from 'axios';
-import React, {useState, useEffect, useLayoutEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { v4 as uuid } from 'uuid';
+import { BaseURL } from '../../common/constants';
 import Ma from './Card';
 const AdminDashBoard = () => {
     const [products, setProducts] = useState([]);
     const [idCount , setIdCount] = useState(0)
     useEffect(() =>{
-        axios.get('https://e-commerce-port.herokuapp.com/product/getAll').then((res)=>{
+        axios.get(`${BaseURL}/product/getAll`).then((res)=>{
             setProducts(res.data);
             setIdCount(res.data.length);
         })
@@ -55,7 +56,7 @@ const AdminDashBoard = () => {
         };
         console.log(ProductData);
         // axios.post('http://localhost:2200/product/post', {...ProductData, method: 'POST'}).then((response)=>{
-        axios.post('https://e-commerce-port.herokuapp.com/product/post', {...ProductData, method: 'POST'}).then((response)=>{
+        axios.post(`${BaseURL}/product/post`, {...ProductData, method: 'POST'}).then((response)=>{
             colorArr = [];
             imgArr = [];
             setImgUrl([]);
@@ -74,9 +75,9 @@ const AdminDashBoard = () => {
             setProducts([...products, response.data.product])
         }).catch((error) => {console.log(error);});        
     };
-    if(!idCount){
-        return <>Loading....</>
-    }
+    // if(!idCount){
+    //     return <>Loading....</>
+    // }
     return (
         <>
             <Flex w='100%' direction={['column', 'row']}>
@@ -210,11 +211,11 @@ const AdminDashBoard = () => {
                     alignItems="center"
                     justifyContent="center"  
                     flexWrap={'wrap'}>
-                        {
+                        {/* {
                             products && products.map((item)=>(
                                 <Ma {...item} key={item._id}/>
                             ))
-                        }
+                        } */}
                     </Flex>
                 </VStack>
                 {/* <Box maxW={{base : "50%",lg : "50%", md : "100%", sm : "100%", xm : "100%"}}   >

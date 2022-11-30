@@ -1,17 +1,13 @@
 import { Box, Button, Stack, Text, VStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {v4 as uuid} from 'uuid'
-import { userLoggedOut } from "../../Redux/Login/Action";
+import { LogOut } from "../../Redux/Login/Login";
 export const ProfileBar = ()=>{
     const {status} = useSelector((store)=> store.login);
-    const [loggedornot , setLoggedornot] = useState(status)
     const dispatch = useDispatch();
     const handleLogOut = ()=>{
-        console.log('here in handleLogOut')
-        setLoggedornot(!loggedornot);
-        dispatch(userLoggedOut())
+        dispatch(LogOut());
     }
     const ArrayOfOptions = [
         {
@@ -68,7 +64,7 @@ export const ProfileBar = ()=>{
                     To access account and manage orders
                 </Text>
                 {
-                    loggedornot && status ?
+                    status ?
                     <Button
                     onClick={handleLogOut}
                     variant='outline'
@@ -79,21 +75,29 @@ export const ProfileBar = ()=>{
                         LOGINOUT
                     </Button>
                     :
-                    <Link to={'/signup'}
-                        onClick={()=>{
-                            console.log('her')
-                            setLoggedornot(true)
-                        }}
-                    >
+                    <>
                         <Button 
+                        as={Link}
+                        to={'/signup'}
                         variant='outline'
                         color='red.500'
                         _hover={{bg:'transparent'}}
                         _active={{bg:'transparent'}}
                         >
-                            LOGIN / SIGNUP
+                            SIGNUP
                         </Button>
-                    </Link> 
+                        <Button
+                        as={Link}
+                        to={'/login'} 
+                        variant='outline'
+                        color='red.500'
+                        _hover={{bg:'transparent'}}
+                        _active={{bg:'transparent'}}
+                        >
+                            LOGIN
+                        </Button>                    
+                    </>
+                     
                 }
             </VStack>
             <VStack

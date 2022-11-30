@@ -9,22 +9,39 @@ import {
     Link,
     Stack,
     Image,
+    useToast,
 } from '@chakra-ui/react';
-import {apiCallLoggedIn} from '../../Redux/Login/Action'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { apiCallLoggedIn } from '../../Redux/Login/Login';
 export default function SplitScreen() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const toast = useToast();
     const handleSubmit = (event) => {
         event.preventDefault();
         let data = {
             email : document.getElementById('emailInput').value,
             password : document.getElementById('passwordInput').value,
         };
-        console.log(data, 'ahere')
-        dispatch(apiCallLoggedIn(data)).then(()=> {}).catch((err)=> console.log(err));
-        // window.location.href= '/'
+        dispatch(apiCallLoggedIn(data)).then(()=> {
+            toast({
+                title : "Login Successfully",
+                status : 'success',
+                duration : 3000,
+                isClosable : true,
+                position : 'bottom'
+            })
+            navigate('/');
+        }).catch((err)=> {
+            toast({
+                title : "Login failed",
+                status : 'error',
+                duration : 3000,
+                isClosable : true,
+                position : 'bottom'
+            })
+        });
     }
     return (
         <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>

@@ -1,7 +1,6 @@
-import { Box, Flex, Stack, useColorModeValue } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { Box, Flex, Stack } from "@chakra-ui/react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { apiCallGetData } from "../../Redux/Data/Action";
 import Filter from "../Filter/Filter";
 import Ma from "./Card";
 
