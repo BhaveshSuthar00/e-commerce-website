@@ -19,15 +19,15 @@ import { v4 as uuid } from 'uuid';
 import { BaseURL } from '../../common/constants';
 import Ma from './Card';
 const AdminDashBoard = () => {
-    const [products, setProducts] = useState([]);
-    const [idCount , setIdCount] = useState(0)
-    useEffect(() =>{
-        axios.get(`${BaseURL}/product/getAll`).then((res)=>{
-            setProducts(res.data);
-            setIdCount(res.data.length);
-        })
-        .catch((err)=>{console.log(err)})
-    },[])
+    // const [products, setProducts] = useState([]);
+    // const [idCount , setIdCount] = useState(0)
+    // useEffect(() =>{
+    //     axios.get(`${BaseURL}/product/getAll`).then((res)=>{
+    //         setProducts(res.data);
+    //         setIdCount(res.data.length);
+    //     })
+    //     .catch((err)=>{console.log(err)})
+    // },[])
     const [imgUrl, setImgUrl] = useState([]);
     const [colorList, setColorList] = useState([]);
     const handleSubmit = (event)=>{
@@ -41,7 +41,6 @@ const AdminDashBoard = () => {
             colorArr.push(colorList[i].color);
         }
         const ProductData = {
-            id : idCount,
             productName : document.getElementById('productName').value,
             price: +document.getElementById('price').value,
             discount: +document.getElementById('discount').value,
@@ -57,23 +56,23 @@ const AdminDashBoard = () => {
         console.log(ProductData);
         // axios.post('http://localhost:2200/product/post', {...ProductData, method: 'POST'}).then((response)=>{
         axios.post(`${BaseURL}/product/post`, {...ProductData, method: 'POST'}).then((response)=>{
-            colorArr = [];
-            imgArr = [];
-            setImgUrl([]);
-            setColorList([]);
-            document.getElementById('productName').value = null;
-            document.getElementById('idFor').value = null;
-            document.getElementById('price').value = null;
-            document.getElementById('discount').value = null;
-            document.getElementById('category').value = null;
-            document.getElementById('subCategory').value = null;
-            document.getElementById('stockQty').value = null;
-            document.getElementById('description').value = null;
-            document.getElementById('fabric').value = null;
-            document.getElementById('brand').value = null;
-            setIdCount(idCount+1)
-            setProducts([...products, response.data.product])
-        }).catch((error) => {console.log(error);});        
+            // colorArr = [];
+            // imgArr = [];
+            // setImgUrl([]);
+            // setColorList([]);
+            // document.getElementById('productName').value = null;
+            // document.getElementById('idFor').value = null;
+            // document.getElementById('price').value = null;
+            // document.getElementById('discount').value = null;
+            // document.getElementById('category').value = null;
+            // document.getElementById('subCategory').value = null;
+            // document.getElementById('stockQty').value = null;
+            // document.getElementById('description').value = null;
+            // document.getElementById('fabric').value = null;
+            // document.getElementById('brand').value = null;
+            // setIdCount(idCount+1)
+            // setProducts([...products, response.data.product])
+        }).catch((error) => {console.log(error)});        
     };
     // if(!idCount){
     //     return <>Loading....</>
@@ -84,10 +83,10 @@ const AdminDashBoard = () => {
                 <VStack direction='row' bg='pink' w={{base : "50%",lg : "50%", md : "100%", sm : "100%", xm : "100%"}}  
                 p={3}>
                     <Box as='form' w={"100%"} bg='pink.100' onSubmit={(e)=>handleSubmit(e)} >
-                        <FormControl>
+                        {/* <FormControl>
                             <FormLabel htmlFor='idFor'>Id</FormLabel>
                             <Input id='idFor' defaultValue={idCount} type='number' />
-                        </FormControl>
+                        </FormControl> */}
                         <FormControl>
                             <FormLabel htmlFor='productName'>Product Name</FormLabel>
                             <Input id='productName' type='text' />

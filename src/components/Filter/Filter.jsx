@@ -2,6 +2,7 @@ import { Box, Checkbox, CheckboxGroup, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
+import { brand, category, discount } from "../../common/constants";
 const dp = {
   py: 3,
   ml: 6,
@@ -11,7 +12,7 @@ const headerText = {
   fontWeight: "bold",
 };
 const Filter = () => {
-  const { data, category, brand, discount } = useSelector(
+  const { data } = useSelector(
     (store) => store.Data
   );
   return (

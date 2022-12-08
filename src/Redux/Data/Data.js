@@ -15,9 +15,9 @@ const DataSlice = createSlice({
     reducers : {
         setProductData : (state, { payload }) => {
             state.data = payload.product;
-            state.category = payload.category;
-            state.brand = payload.brand;
-            state.discount = payload.discount;
+            // state.category = payload.category;
+            // state.brand = payload.brand;
+            // state.discount = payload.discount;
         }
     }
 })
@@ -30,6 +30,7 @@ export const apiCallGetData = value => {
             console.log(value);
             let req = await axios.get(`${BaseURL}/product/getAll?category=${value}`);
             // let req2 = await axios.get(`${BaseURL}/product/all`);
+            console.log(req);
             dispatch(setProductData(req.data));
         } catch (err) {
             console.log(err.message);
