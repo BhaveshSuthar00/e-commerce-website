@@ -104,10 +104,6 @@ const DesktopNav = () => {
     const linkColor = useColorModeValue("gray.600", "gray.200");
     const linkHoverColor = useColorModeValue("gray.800", "white");
     const popoverContentBgColor = useColorModeValue("white", "gray.800");
-    const dispatch = useDispatch();
-    const setCategory = value => {
-        dispatch(apiCallGetData(value));
-    };
     return (
         <Stack direction={"row"} spacing={8}>
             {NAV_ITEMS.map(navItem => (
@@ -134,7 +130,7 @@ const DesktopNav = () => {
                             <PopoverContent border={0} boxShadow={"xl"} rounded={"xl"} bg={popoverContentBgColor} p={4} mt={4} minW={"sm"}>
                                 <Stack>
                                     {navItem.children.map(child => (
-                                        <DesktopSubNav key={child.label} dispatchFunction={setCategory} {...child} />
+                                        <DesktopSubNav key={child.label} {...child} />
                                     ))}
                                 </Stack>
                             </PopoverContent>
@@ -146,13 +142,12 @@ const DesktopNav = () => {
     );
 };
 
-const DesktopSubNav = ({ label, value, href, subLabel, dispatchFunction }) => {
+const DesktopSubNav = ({ label, value, href, subLabel }) => {
     return (
         <Link
-            to={href}
+            to={`${href}?category=${value}`}
             role={"group"}
             display={"block"}
-            onClick={() => dispatchFunction(value)}
             p={2}
             rounded={"md"}
             _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}

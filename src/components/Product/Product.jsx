@@ -1,12 +1,22 @@
 import { Box, Flex, Stack } from "@chakra-ui/react";
 import React from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { apiCallGetData } from "../../Redux/Data/Data";
 import Filter from "../Filter/Filter";
 import Ma from "./Card";
 
 const Product = () => {
   const dispatch = useDispatch();
   const { data } = useSelector((store) => store.Data);
+  const [queryParams, setSearchParams] = useSearchParams();
+  const setCat = () => {
+    dispatch(apiCallGetData(queryParams.get('category')));
+  }
+  useEffect(()=> {
+    setCat();
+  }, [queryParams.get('category')])
   return (
     <Stack direction={["column", "row"]} borderTop={"1px solid #d8d8d8"} mt={2}>
       <Filter />
