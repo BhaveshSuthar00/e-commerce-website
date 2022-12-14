@@ -24,7 +24,6 @@ const SingleProduct = () => {
     useEffect(()=> {
         getData();
     }, [])
-    console.log(data);
     if(loading) return <></>;
     return (
         <Box w={'90%'} m='auto' display='flex' mt={4}>
@@ -52,16 +51,22 @@ const SingleProduct = () => {
                     </Text>
                     <ButtonGroup mt={3} size='lg' spacing={5}>
                         <Button 
-                        bgColor={'#ff3e6c'} 
-                        _hover={{bgColor : "#ff3e6c"}} 
-                        _focus={{outline : 0, bgColor : "#ff3e6c"}} 
-                        _active={{bgColor : "#ff3e6c"}} 
-                        color='white' 
-                        fontSize={'2xl'}  borderRadius={0}>
+                            bgColor={'#ff3e6c'} 
+                            _hover={{bgColor : "#ff3e6c"}} 
+                            _focus={{outline : 0, bgColor : "#ff3e6c"}} 
+                            _active={{bgColor : "#ff3e6c"}} 
+                            color='white' 
+                            fontSize={'2xl'}  borderRadius={0}
+                        >
                             <Icon as={HiShoppingBag} mr={2}/>
                             Add to Bag
                         </Button>
-                        <Button variant='outline'  textColor='black' borderRadius={0} bgColor={'transparent'} _hover={{bgColor : "transparent", border : '1px solid'}} _focus={{outline : 0, bgColor : "transparent"}} _active={{bgColor : "transparent"}}>
+                        <Button variant='outline' textColor='black' 
+                            borderRadius={0} bgColor={'transparent'} 
+                            _hover={{bgColor : "transparent", border : '1px solid'}} 
+                            _focus={{outline : 0, bgColor : "transparent"}} 
+                            _active={{bgColor : "transparent"}}
+                        >
                             <Icon as={AiOutlineHeart} mr={2}/>
                             WishList
                         </Button>

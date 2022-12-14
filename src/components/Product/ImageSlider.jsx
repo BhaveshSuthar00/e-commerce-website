@@ -11,7 +11,6 @@ export const ImageSlider = ({image, height}) => {
     const prevSlide = () => {
         setCurrentSlide((s) => (s === 0 ? slidesCount - 1 : s - 1));
     };
-    console.log(slidesCount);
     const nextSlide = () => {
         setCurrentSlide((s) => (s === slidesCount - 1 ? 0 : s + 1));
     };

@@ -24,8 +24,6 @@ import { AiOutlineSearch, AiOutlineHeart } from "react-icons/ai";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { BsHandbag } from "react-icons/bs";
 import { ProfileBar } from "./ProfileBar";
-import { useDispatch } from "react-redux";
-import { apiCallGetData } from "../../Redux/Data/Data";
 const Navbar = () => {
     const popoverContentBgColor = useColorModeValue("white", "gray.800");
     const { isOpen, onToggle } = useDisclosure();

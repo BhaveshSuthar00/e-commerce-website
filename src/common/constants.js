@@ -1,10 +1,15 @@
+import axios from "axios";
+
 // export const BaseURL = `http://localhost:2200`;
 export const BaseURL = `https://indigo-foal-toga.cyclic.app`
-export const headerConfig = authToken => {
-    return {
-        headers: { Authorization: `Bearer ${authToken}` },
-    };
-};
+
+export const setHeaderToken = token => {
+    if(token){
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    } else {
+        delete axios.defaults.headers.common['Authorization'];
+    }  
+}
 
 export const category = [
     "t-shirt",

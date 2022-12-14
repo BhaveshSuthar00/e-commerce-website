@@ -1,14 +1,14 @@
 import { Box, Button, Stack, Text, VStack } from "@chakra-ui/react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {v4 as uuid} from 'uuid'
-import { LogOut } from "../../Redux/Login/Login";
+import { BaseURL } from "../../common/constants";
+import { LogOutFunction } from "../../Redux/Login/Login";
 export const ProfileBar = ()=>{
     const {status} = useSelector((store)=> store.login);
     const dispatch = useDispatch();
-    const handleLogOut = ()=>{
-        dispatch(LogOut());
-    }
+    const handleLogOut = () => dispatch(LogOutFunction());
     const ArrayOfOptions = [
         {
             href : "#",

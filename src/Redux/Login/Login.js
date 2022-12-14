@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from 'universal-cookie';
-import { BaseURL } from "../../common/constants";
+import { BaseURL, setHeaderToken } from "../../common/constants";
 const cookies = new Cookies();
 const loginSlice = createSlice({
     name : 'login',
@@ -29,13 +29,21 @@ const loginSlice = createSlice({
 })
 
 export const { setLoginInfo, LogOut } = loginSlice.actions;
-
+export const LogOutFunction = () => async(dispatch) => {
+    try {
+        dispatch(LogOut());
+        setHeaderToken();
+    }
+    catch (err) {
+        return err;
+    }
+}
 export const apiCallLoggedIn = (data) =>{
     return async (dispatch) => {
         try {
             const userData = await axios.post(`${BaseURL}/user/login`, {...data, method : "GET"});
             cookies.set('token', userData.data.token, { path: '/' });
-            // console.log(cookies.get('token'));
+            setHeaderToken(userData.data.token);
             dispatch(setLoginInfo(userData.data));
         }
         catch (err) {
