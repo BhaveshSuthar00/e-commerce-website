@@ -6,7 +6,7 @@ export const BaseURL = `https://indigo-foal-toga.cyclic.app`
 export const setHeaderToken = token => {
     if(token){
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    } else {  .
+    } else {  
         delete axios.defaults.headers.common['Authorization'];
     }  
 }
