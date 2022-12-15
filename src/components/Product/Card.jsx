@@ -2,12 +2,13 @@ import React from "react";
 import { chakra, Box, Flex, useColorModeValue,Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { ImageSlider } from "./ImageSlider";
-const Ma = ({_id, productName,image, price, description, discount}) => {
+const Ma = ({_id, widthFor, productName,image, price, description, discount}) => {
     return (
         <Box
             as={Link}
-            w={"220px"}
-            to={`${_id}`}
+            // w={"220px"}
+            w={widthFor ? widthFor : '15%'}
+            to={`/product/${_id}`}
             bg={useColorModeValue("white", "gray.800")}
             shadow='md'
             animateopacity='true'

@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import {
   Box,
   Container,
@@ -104,9 +103,11 @@ export default function LargeWithAppLinksAndSocial() {
                 <Box w="40%">
                   <Image src="https://constant.myntassets.com/web/assets/img/6c3306ca-1efa-4a27-8769-3b69d16948741574602902452-original.png" />
                 </Box>
-                <Text>
-                  <Text as="strong">100% ORIGINAL</Text>
-                  guarantee for all products at myntra.com
+                <Text ml={3}>
+                  <Text as="strong">100% ORIGINAL </Text>
+                  <Text as='span'>
+                    guarantee for all products at myntra.com
+                  </Text>
                 </Text>
               </Flex>
             </Link>
@@ -115,9 +116,11 @@ export default function LargeWithAppLinksAndSocial() {
                 <Box w="31%">
                   <Image src="https://constant.myntassets.com/web/assets/img/ef05d6ec-950a-4d01-bbfa-e8e5af80ffe31574602902427-30days.png" />
                 </Box>
-                <Text>
-                  <Text as="strong">Return within 30days</Text>
-                  of receiving your order
+                <Text ml={3}>
+                  <Text as="strong">Return within 30days </Text>
+                  <Text as='span'>
+                    of receiving your order
+                  </Text>
                 </Text>
               </Flex>
             </Link>

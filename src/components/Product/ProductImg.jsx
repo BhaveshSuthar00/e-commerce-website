@@ -6,10 +6,12 @@ export const ProductImg = ({images}) => {
     const setCurrentFunction = (operation) => {
         operation === '-' && setCurrent(prev => {
             if(current > 0) return prev - 1;
+            else if(current === 0) return images.length - 1;
             else return prev;
         })
         operation === '+' && setCurrent(prev => {
             if(current < images.length -1) return prev + 1;
+            else if(current === images.length -1) return 0;
             else return prev;
         })
     }
