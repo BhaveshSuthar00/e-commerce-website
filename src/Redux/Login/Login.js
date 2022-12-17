@@ -23,20 +23,17 @@ const loginSlice = createSlice({
             state.lastName = '';
             state.token = '';
             state.status = false;
-            cookies.remove('token');
+            // cookies.remove('token');
         }
     }
 })
 
 export const { setLoginInfo, LogOut } = loginSlice.actions;
-export const LogOutFunction = () => async(dispatch) => {
-    try {
+export const LogOutFunction = () => (dispatch) => {
         dispatch(LogOut());
+        cookies.remove('token', {path : '/'})
+        // cookies.remove('token');
         setHeaderToken();
-    }
-    catch (err) {
-        return err;
-    }
 }
 export const apiCallLoggedIn = (data) =>{
     return async (dispatch) => {

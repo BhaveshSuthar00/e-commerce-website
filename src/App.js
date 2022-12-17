@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AllRoutes from './AllRoutes/AllRoutes';
+import { jwt, setHeaderToken } from './common/constants';
 import Navbar from './components/Navbar/Navbar';
-// https://e-commerce-port.herokuapp.com/
+import { apiCallGetData } from './Redux/Data/Data';
 function App() {
+  useEffect(() => {
+    if(jwt()) {
+      setHeaderToken(jwt());
+    }
+  }, []);
   return (
     <>
       <Navbar />

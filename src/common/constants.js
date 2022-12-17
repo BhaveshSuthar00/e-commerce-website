@@ -1,7 +1,9 @@
 import axios from "axios";
-
+import Cookies from 'universal-cookie';
 // export const BaseURL = `http://localhost:2200`;
 export const BaseURL = `https://indigo-foal-toga.cyclic.app`
+const cookies = new Cookies();
+export const jwt = () => cookies.get('token') || "";
 
 export const setHeaderToken = token => {
     if(token){

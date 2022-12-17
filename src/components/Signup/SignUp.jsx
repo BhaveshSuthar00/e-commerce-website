@@ -15,12 +15,11 @@ import {
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-  import {useDispatch, useSelector} from 'react-redux'
+  import { useDispatch } from 'react-redux'
   import { Link } from 'react-router-dom';
 import { apiCallSignIn } from '../../Redux/Login/Login';
   export default function SignupCard() {
     const dispatch = useDispatch();
-    const data = useSelector((store)=> store);
     const [showPassword, setShowPassword] = useState(false);
     const handelSubmit = (event)=>{
       event.preventDefault();
@@ -32,7 +31,6 @@ import { apiCallSignIn } from '../../Redux/Login/Login';
       }
       dispatch(apiCallSignIn(data)).then(()=> window.location.href = "/").catch((err)=> alert(err));
     }
-    console.log(data)
     return (
       <>
       <Flex

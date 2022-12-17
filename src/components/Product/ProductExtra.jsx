@@ -3,6 +3,7 @@ import { Box, Text } from "@chakra-ui/react"
 export const ProductExtra = () => {
     return (
         <Box>
+            <hr style={{marginTop : "2%", marginBottom : "4%" }}/>
             <Text fontSize={'larger'} fontWeight='bold'>Specifications</Text>
             <Box display={'flex'} flexWrap='wrap' justifyContent={'space-between'} mt={4}>
                 {

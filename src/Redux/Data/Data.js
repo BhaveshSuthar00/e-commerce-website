@@ -6,30 +6,42 @@ const DataSlice = createSlice({
     name : 'Data',
     initialState : {
         data: [],
-        category: [],
-        brand: [],
-        discount: [],
-        color: [],
-        searchCateegory: ""
+        product : {},
+        loading : false,
     },
     reducers : {
         setProductData : (state, { payload }) => {
             state.data = payload.product;
-            // state.category = payload.category;
-            // state.brand = payload.brand;
-            // state.discount = payload.discount;
+        },
+        setAdded : (state, { payload }) => {
+            state.product = payload;
+        },
+        setLoading : (state, { payload }) => {
+            state.loading = payload;
         }
     }
 })
 
-export const { setProductData } = DataSlice.actions;
+export const { setProductData, setAdded, setLoading } = DataSlice.actions;
 
 export const apiCallGetData = value =>  async (dispatch) => {
     try {
-        let req = await axios.get(`${BaseURL}/product/getAll?category=${value}`);
+        const req = await axios.get(`${BaseURL}/product/getAll?category=${value}`);
         dispatch(setProductData(req.data));
     } catch (err) {
-        console.log(err.message);
+        console.log(err);
     }
 };
+
+export const apiCallCart = (productId) => async (dispatch) => {
+    try {
+        dispatch(setLoading(true));
+        const req = await axios.post(`${BaseURL}/cart/post`, { productId : productId });
+        dispatch(setAdded(req.data));
+        dispatch(setLoading(false));
+    }
+    catch (err) {
+        console.log(err);
+    }
+} 
 export default DataSlice.reducer;
