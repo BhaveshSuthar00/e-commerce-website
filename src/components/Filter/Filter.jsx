@@ -13,7 +13,7 @@ const headerText = {
 };
 const Filter = () => {
   const { data } = useSelector(
-    (store) => store.Data
+    (store) => store.data
   );
   return (
     <>

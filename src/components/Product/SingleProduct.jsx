@@ -18,7 +18,7 @@ const SingleProduct = () => {
     const { id } = useParams();
     const [singleData, setData] = useState({});
     const [loading, setLoading] = useState(true);
-    const { data } = useSelector((store) => store.Data);
+    const { data } = useSelector((store) => store.data);
     const getData = async() => {
         try {
             setLoading(true);
@@ -34,7 +34,7 @@ const SingleProduct = () => {
     if(loading) return <></>;
     return (
         <>
-            <Box w={'90%'} m='auto' display='flex' mt={4}>
+            <Box w={'90%'} m='auto' display='flex' flexDir={{base : 'row', lg : "row", md : "row", sm : "row"}} mt={4}>
                 <Flex flex={1}  wrap={'wrap'}>
                     <ProductImg images={singleData.image}/>
                 </Flex>

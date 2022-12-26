@@ -1,14 +1,16 @@
 import { Box, Button, Stack, Text, VStack } from "@chakra-ui/react";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {v4 as uuid} from 'uuid'
-import { BaseURL } from "../../common/constants";
 import { LogOutFunction } from "../../Redux/Login/Login";
 export const ProfileBar = ()=>{
     const {status} = useSelector((store)=> store.login);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const handleLogOut = () => dispatch(LogOutFunction());
+    const handleLogOut = () => {
+        dispatch(LogOutFunction());
+        navigate('/login')
+    }
     const ArrayOfOptions = [
         {
             href : "#",
@@ -97,7 +99,6 @@ export const ProfileBar = ()=>{
                             LOGIN
                         </Button>                    
                     </>
-                     
                 }
             </VStack>
             <VStack

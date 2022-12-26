@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from 'universal-cookie';
 import { BaseURL, setHeaderToken } from "../../common/constants";
+import { emptyTheCart } from "../Cart/Cart";
 const cookies = new Cookies();
 const loginSlice = createSlice({
     name : 'login',
@@ -31,8 +32,8 @@ const loginSlice = createSlice({
 export const { setLoginInfo, LogOut } = loginSlice.actions;
 export const LogOutFunction = () => (dispatch) => {
         dispatch(LogOut());
+        dispatch(emptyTheCart());
         cookies.remove('token', {path : '/'})
-        // cookies.remove('token');
         setHeaderToken();
 }
 export const apiCallLoggedIn = (data) =>{
@@ -44,7 +45,7 @@ export const apiCallLoggedIn = (data) =>{
             dispatch(setLoginInfo(userData.data));
         }
         catch (err) {
-            return err.response.data.message;
+            throw new Error(err.response.data.message);
         }
     }
 }

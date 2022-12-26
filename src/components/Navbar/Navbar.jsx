@@ -24,13 +24,15 @@ import { AiOutlineSearch, AiOutlineHeart } from "react-icons/ai";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { BsHandbag } from "react-icons/bs";
 import { ProfileBar } from "./ProfileBar";
+import { useSelector } from "react-redux";
 const Navbar = () => {
     const popoverContentBgColor = useColorModeValue("white", "gray.800");
     const { isOpen, onToggle } = useDisclosure();
+    const { status } = useSelector(store => store.login);
     const handleSubmitForm = event => {
         event.preventDefault();
-        let value = document.getElementById("searchfield").value;
-        document.getElementById("searchfield").value = null;
+        // let value = document.getElementById("searchfield").value;
+        // document.getElementById("searchfield").value = null;
     };
     return (
         <Box borderBottom={1} borderStyle={"solid"} borderColor={useColorModeValue("gray.200", "gray.900")}>
@@ -84,7 +86,9 @@ const Navbar = () => {
                             <AiOutlineHeart style={{ margin: "auto", fontSize: "20px" }} />
                             <Text fontWeight={500}>Wishlist</Text>
                         </Box>
-                        <Box px={3} cursor="pointer">
+                        <Box px={3} cursor="pointer" as={Link} 
+                            to={status ? `/bag` : '/login'}
+                        >
                             <BsHandbag style={{ margin: "auto", fontSize: "20px" }} />
                             <Text fontWeight={500}>Bag</Text>
                         </Box>

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BaseURL } from "../../common/constants";
-
 const DataSlice = createSlice({
     name : 'Data',
     initialState : {

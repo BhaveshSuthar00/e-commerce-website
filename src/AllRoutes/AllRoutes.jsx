@@ -16,7 +16,7 @@ const AllRoutes = () => {
       <Route path="/login" element={<SplitScreen />} />
       <Route path="/product" element={<Product />} />
       <Route path="/product/:id" element={<SingleProduct />} />
-      <Route path="/cart" element={<Cart />} />
+      <Route path="/bag" element={<Cart />} />
       <Route path="/admin" element={<AdminDashBoard />} />
     </Routes>
   );

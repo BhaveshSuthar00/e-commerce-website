@@ -5,8 +5,9 @@ import { apiCallCart } from "../../Redux/Data/Data";
 
 export const ButtonS = ({BagIcon, WishListBag, productId}) => {
     const dispatch = useDispatch();
-    const { loading } = useSelector(store => store.Data);
+    const { loading } = useSelector(store => store.data);
     const { token } = useSelector(store => store.login);
+    console.log(token);
     const navigate = useNavigate();
     const addingItem = () => {
         if(token) dispatch(apiCallCart(productId));
@@ -23,7 +24,7 @@ export const ButtonS = ({BagIcon, WishListBag, productId}) => {
                     _active={{bgColor : "#ff3e6c"}} 
                     color='white' 
                     isLoading={loading}
-                    isDisabled={!token == '' ? false : true}
+                    isDisabled={!token === '' ? false : true}
                     fontSize={'2xl'}  borderRadius={0}
                     onClick={addingItem}
                     >
@@ -32,7 +33,7 @@ export const ButtonS = ({BagIcon, WishListBag, productId}) => {
                 </Button>
                 <Button variant='outline' textColor='black' 
                     borderRadius={0} bgColor={'transparent'} 
-                    isDisabled={!token == '' ? false : true}
+                    isDisabled={!token === '' ? false : true}
                     _hover={{bgColor : "transparent", border : '1px solid'}} 
                     _focus={{outline : 0, bgColor : "transparent"}} 
                     _active={{bgColor : "transparent"}}

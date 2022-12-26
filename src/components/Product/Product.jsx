@@ -9,7 +9,7 @@ import Ma from "./Card";
 
 const Product = () => {
   const dispatch = useDispatch();
-  const { data } = useSelector((store) => store.Data);
+  const { data } = useSelector((store) => store.data);
   const [queryParams, setSearchParams] = useSearchParams();
   const setCat = () => {
     dispatch(apiCallGetData(queryParams.get('category')));
