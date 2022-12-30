@@ -5,13 +5,13 @@ export const Card = ({ _id, category, brand, widthFor, productName,image, price,
     return (
         <>
             <Box h={'15vh'} m={4} display='flex' overflow={'hidden'} justifyContent={'space-between'} borderRadius='md' boxShadow="rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;" >
-                <Box h={'100%'} w='20%'>
+                <Box h={'100%'} w={"20%"}>
                     <Image src={image} w='100%' h={'100%'} />
                 </Box>
-                <Box flex={1} ml={2} mt={2}>
+                <Box w={"80%"} ml={2} mt={2}>
                     <IconButton icon={<CloseIcon />} float='right' m={2} variant='unstyled' onClick={() => deleteFun(_id)} _focus={{outline : 0}} />
-                    <Text fontWeight={'bold'} height='3vh' fontSize={'sm'} overflow={'hidden'}>{productName}</Text>
-                    <Text color={'gray.600'} height='3vh' overflow={'hidden'}>{description}</Text>
+                    <Text fontWeight={'bold'} height='2vh' textOverflow={'ellipsis'} fontSize={'sm'} whiteSpace={'nowrap'} overflow={'hidden'}>{productName}</Text>
+                    <Text color={'gray.600'} height='2vh' mt={4} mb={4} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={'hidden'}>{description}</Text>
                     <Flex align={'center'}>
                         {
                             discount !== 0 ?

@@ -8,8 +8,6 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
     try {
         const AUTH_TOKEN = cookie.get('token');
         setHeaderToken(AUTH_TOKEN);
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${AUTH_TOKEN}`
-        // console.log(axios.defaults.headers.common);
         const response = await axios.get(`${BaseURL}/cart`);
         return response.data;
     }
@@ -27,27 +25,35 @@ const cartSlice = createSlice({
     reducers : {
         setCart : (state, { payload }) => {
             state.cart = payload;
+            state.loading = false;
+            state.isError = false;
         },
         emptyTheCart : (state, { payload }) => {
             state.cart = [];
             state.loading = false;
             state.isError = false;
+        },
+        setError : (state, { payload }) => {
+            state.isError = payload;
+        },
+        setLoading : (state, { payload }) => {
+            state.loading = payload;
         }
     },
     extraReducers : (builder) => {
         builder.addCase(fetchCart.fulfilled, (state, { payload }) => {
-            // console.log(payload, 'paylaod');
             state.cart = payload.productId;
+            state.loading = false;
         })
     }
 })
 
-export const { setCart, emptyTheCart } = cartSlice.actions;
+export const { setCart, emptyTheCart, setError, setLoading } = cartSlice.actions;
 
 export const getCartApi = () => async (dispatch) => {
     try {
+        dispatch(setLoading(true));
         const response = await axios.get(`${BaseURL}/cart`);
-        console.log(response.data);
         dispatch(setCart(response.data));
     }
     catch (err) {
@@ -59,12 +65,11 @@ export const removeProduct = (id) => async (dispatch, getState) => {
     try {
         const { cart } = getState().cart;
         let newList = cart.filter(item => item._id !== id);
-        console.log(newList);
         await axios.patch(`${BaseURL}/cart/${id}`);
         dispatch(setCart(newList));
     }
     catch (err) {
-        throw new Error(err);
+        throw new Error(err.response.data.message);
     }
 }
 
