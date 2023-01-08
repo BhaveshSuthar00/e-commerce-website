@@ -53,6 +53,8 @@ export const { setCart, emptyTheCart, setError, setLoading } = cartSlice.actions
 export const getCartApi = () => async (dispatch) => {
     try {
         dispatch(setLoading(true));
+        const AUTH_TOKEN = cookie.get('token');
+        setHeaderToken(AUTH_TOKEN);
         const response = await axios.get(`${BaseURL}/cart`);
         dispatch(setCart(response.data));
     }

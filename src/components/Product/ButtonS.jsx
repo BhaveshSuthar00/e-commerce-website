@@ -1,6 +1,8 @@
 import { Button, ButtonGroup, Icon } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
+import useAddToCart from "../../hooks/useAddToCart";
+// import useAddToCart from "../../hooks/useAddToCart";
 import { apiCallCart } from "../../Redux/Data/Data";
 
 export const ButtonS = ({BagIcon, WishListBag, productId}) => {
@@ -8,10 +10,11 @@ export const ButtonS = ({BagIcon, WishListBag, productId}) => {
     const { loading } = useSelector(store => store.data);
     const { token } = useSelector(store => store.login);
     const navigate = useNavigate();
-    const addingItem = () => {
-        if(token) dispatch(apiCallCart(productId));
-        else navigate('/login')
-    }
+    // const addingItem = () => {
+    //     if(token) dispatch(apiCallCart(productId));
+    //     else navigate('/login')
+    // }
+    const [getData] = useAddToCart();
     return (
         <>
             
@@ -25,7 +28,7 @@ export const ButtonS = ({BagIcon, WishListBag, productId}) => {
                     isLoading={loading}
                     isDisabled={token !== '' ? false : true}
                     fontSize={'2xl'}  borderRadius={0}
-                    onClick={addingItem}
+                    onClick={() => getData(productId)}
                     >
                     <Icon as={BagIcon} mr={2}/>
                     Add to Bag

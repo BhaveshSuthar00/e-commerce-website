@@ -6,14 +6,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchCart, removeProduct, setLoading } from '../../Redux/Cart/Cart';
 import { Card } from './Card';
 import { Link } from 'react-router-dom';
+import Ma from '../Product/Card';
+import { apiCallGetData } from '../../Redux/Data/Data';
 
 const Cart = () => {
     const { cart, loading } = useSelector(store => store.cart);
+    const { data } = useSelector(store => store.data);
     const dispatch = useDispatch();
     const deleteFun = (id) => dispatch(removeProduct(id));
     useEffect(() => {
         dispatch(setLoading(true));
         dispatch(fetchCart());
+        if(data.length === 0) {
+            dispatch(apiCallGetData('t-shirt'));
+        }
     }, [dispatch]);
 
     if(loading) {
@@ -46,6 +52,9 @@ const Cart = () => {
                         </Text>
                     </Box>
                 </Box>
+            </Box>
+            <Box display={'flex'} gap={5} maxW={'60%'} m='auto' flexWrap={'wrap'}>
+                {data && data.map((product) => <Ma {...product} widthFor='16%' fontSize='sm' page='cart' key={product._id} />)}
             </Box>
         </>
     )

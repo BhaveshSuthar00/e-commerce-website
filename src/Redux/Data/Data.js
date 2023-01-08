@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { BaseURL } from "../../common/constants";
+import { BaseURL, setHeaderToken } from "../../common/constants";
+import Cookies from "universal-cookie";
+import { fetchCart } from "../Cart/Cart";
+const cookie = new Cookies();
 const DataSlice = createSlice({
     name : 'Data',
     initialState : {
@@ -25,6 +28,8 @@ export const { setProductData, setAdded, setLoading } = DataSlice.actions;
 
 export const apiCallGetData = value =>  async (dispatch) => {
     try {
+        const AUTH_TOKEN = cookie.get('token');
+        setHeaderToken(AUTH_TOKEN);
         const req = await axios.get(`${BaseURL}/product/getAll?category=${value}`);
         dispatch(setProductData(req.data));
     } catch (err) {
@@ -34,9 +39,12 @@ export const apiCallGetData = value =>  async (dispatch) => {
 
 export const apiCallCart = (productId) => async (dispatch) => {
     try {
+        const AUTH_TOKEN = cookie.get('token');
+        setHeaderToken(AUTH_TOKEN);
         dispatch(setLoading(true));
         const req = await axios.post(`${BaseURL}/cart/post`, { productId : productId });
         dispatch(setAdded(req.data));
+        dispatch(fetchCart());
         dispatch(setLoading(false));
     }
     catch (err) {
